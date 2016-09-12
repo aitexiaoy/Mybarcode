@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <META content="text/html; charset=gb2312" http-equiv=Content-Type>
+    <title>print barcode</title>
+    <SCRIPT type="text/javascript" src="barcodeJS/jquery-1.3.2.js"></SCRIPT>
+
+    <SCRIPT type="text/javascript" src="barcodeJS/jquery.barcode.0.3.js"></SCRIPT>
+
+    <script type="text/javascript" src="barcodeJS/jquery.jPrintArea.js"></script>
+
+    <SCRIPT type="text/javascript">
+        $(document).ready(function () {
+                    generateC39 = function () {
+                        $('.barcode39').barcode({code: 'code39'});
+                    };
+                    generateI25 = function () {
+                        $('.barcodeI25').barcode({code: 'I25'});
+                    };
+
+                }
+        );
+
+        function PrintBarcode() {
+            var barcodeValue = $("#txtBarcodeValue").val();
+            if (barcodeValue == "")
+                alert("please input barcode value");
+            //隐藏域保存获取的条形码
+         //   $("#hidBarcode").html(barcodeValue);
+         //   $("#hidBarcode").barcode({code: 'code39'});
+            var barcode_value = barcodeValue;
+            var setting = {
+                barWidth: 2,
+                barHeight:300,
+                showHRI:"true",
+                bgColor:"#FFFFFF",
+                color:"#000000",
+                fontSize:10,
+                output:"css"
+            };
+            var barcode_type = "code39";
+
+            $("#hidBarcode").barcode(barcode_value,setting,barcode_type);
+
+            //打印的内容
+            var prnhtml = "<div style='height:14mm;border:0px solid black; text-align:center; width:50mm;'>";
+            prnhtml += "<div id='imgBarcode' style='margin:3px 2px 0px;'>" + document.getElementById("hidBarcode").outerHTML;
+            +"</div>";
+            prnhtml += "<div id='valBarcode' style='height:10px;font-size:10px;letter-spacing:2px;'> PHONE:" + barcodeValue + "</div>";
+            prnhtml += "</div>";
+
+          //  bdhtml = window.document.body.innerHTML;//获取当前页的html代码
+          //  window.document.body.innerHTML = prnhtml;
+            //   window.print();
+            //   window.document.body.innerHTML = bdhtml;
+
+            //    $("#divShow").html(prnhtml);
+
+            //   $("#imgBarcode").printArea();
+        }
+
+    </SCRIPT>
+
+<BODY>
+
+
+please input barcode value <br/>
+<input id="txtBarcodeValue" type="text" value="123456789012345"/>&nbsp;<input type="button" value="Get and Print"
+                                                                              onclick="PrintBarcode();"/>
+<br/><br/>
+Barcode preview below
+<div id="hidBarcode" style="display:block; height:10mm; width:50mm;"></div>
+
+<br/>
+
+<br/>
+Print results are as follows
+<div id="divShow">
+
+</div>
+
+</BODY>
+
+</HTML>
